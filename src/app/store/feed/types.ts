@@ -1,4 +1,3 @@
-import { IFetchNewsAction } from './types'
 export const FETCH_NEWS = 'FETCH_NEWS'
 export const UPDATE_NEWS = 'UPDATE_NEWS'
 

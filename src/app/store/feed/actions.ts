@@ -1,6 +1,6 @@
 import { IFetchNewsParams, IFetchNewsAction, FETCH_NEWS } from './types'
 
-export function fetchMessage(params: IFetchNewsParams): IFetchNewsAction {
+export function fetchNews(params: IFetchNewsParams): IFetchNewsAction {
   return {
     type: FETCH_NEWS,
     payload: {
