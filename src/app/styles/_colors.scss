@@ -1,0 +1,33 @@
+// Header
+//   background: #3c3b63
+//   text: #ffffff
+//   shadow: rgba(0,0,0,0.2)
+
+// Search
+//   background: rgba(255, 255, 255, 0.15)
+//   icon: #ffffff
+//   placeholder: rgba(255, 255, 255, 0.42)
+//   text: #ffffff
+
+// Card
+//   Avatar backgrounnd: #bdbdbd
+//   Avatar text: #fafafa
+//   Avatar text: rgba(0, 0, 0, 0.87)
+//   Avatar date: rgba(0, 0, 0, 0.54)
+//   Catd title: rgba(0, 0, 0, 0.87)
+//   Card description: rgba(0, 0, 0, 0.54)
+//   Card shadow: rgba(0,0,0,0.2)
+
+$header-bg: #3c3b63;
+$white: #ffffff;
+
+$search-bg: rgba(255, 255, 255, 0.15);
+$search-placeholder: rgba(255, 255, 255, 0.42);
+
+$avartar-bg: #bdbdbd;
+$avartar-text: #fafafa;
+$avartar-date: rgba(0, 0, 0, 0.54);
+
+$card-title: rgba(0, 0, 0, 0.87);
+$card-description: rgba(0, 0, 0, 0.54);
+$card-shadow: rgba(0, 0, 0, 0.2);

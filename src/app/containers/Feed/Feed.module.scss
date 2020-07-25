@@ -1,0 +1,12 @@
+.container {
+  padding-top: 64px;
+}
+
+.feedContainer {
+  padding: 1.75rem 0;
+
+  @media (max-width: 1023px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
