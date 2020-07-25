@@ -32,6 +32,7 @@ export interface IFeedState {
 
 export interface IFetchNewsParams {
   page: number
+  pageSize: number
 }
 
 export interface IFetchNewsAction {
