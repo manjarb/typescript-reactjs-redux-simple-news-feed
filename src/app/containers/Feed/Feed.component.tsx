@@ -10,6 +10,7 @@ import { NewsCard } from 'src/app/components/NewsCard/NewsCard.component'
 
 export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNews }) => {
   const [page, setPage] = useState<number>(1)
+  const [totalDisplay, setTotalDisplay] = useState<number>(0)
 
   useEffect(() => {
     fetchNews({
@@ -18,7 +19,9 @@ export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNe
     })
   }, [])
 
-  const { entities, loading } = feed
+  const fetchMore = () => {}
+
+  const { entities, loading, total } = feed
 
   return (
     <div>

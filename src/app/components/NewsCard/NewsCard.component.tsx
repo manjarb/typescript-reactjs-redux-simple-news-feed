@@ -40,7 +40,7 @@ export const NewsCard: React.FC<INewsCard> = ({
 
         <div className="content p-t-15">
           <p className={`is-size-4 m-b-15 ${styles.title}`}>{title}</p>
-          <p className={styles.description}>{parse(description)}</p>
+          <div className={styles.description}>{parse(description)}</div>
         </div>
       </div>
     </div>
