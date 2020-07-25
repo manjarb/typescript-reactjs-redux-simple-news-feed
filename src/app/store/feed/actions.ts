@@ -30,7 +30,6 @@ export function fetchNews(params: IFetchNewsParams): AppThunk<void> {
         'https://newsapi.org/v2/everything?domains=washingtonpost.com,nytimes.com&apiKey=9eeef8086b0b415d81ab3ce24d0fd2e8',
       )
       .then(res => {
-        console.log(res)
         const { articles, totalResults } = res.data
         dispatch(
           fetchNewsSucccess({

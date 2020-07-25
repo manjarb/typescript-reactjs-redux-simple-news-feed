@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { fetchNews } from 'src/app/store/feed/actions'
 import { RootState } from 'src/app/store/root'
 import { Loading } from 'src/app/components/Loading/Loading.component'
+import { Header } from 'src/app/components/Header/Header.component'
 
 export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNews }) => {
   useEffect(() => {
@@ -12,7 +13,12 @@ export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNe
     })
   }, [])
 
-  return <div>{feed.loading && <Loading />}</div>
+  return (
+    <div>
+      <Header />
+      {feed.loading && <Loading />}
+    </div>
+  )
 }
 
 const mapStateToProps = (state: RootState /*, ownProps*/) => {
