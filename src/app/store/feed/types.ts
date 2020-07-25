@@ -1,5 +1,8 @@
-export const FETCH_NEWS = 'FETCH_NEWS'
-export const UPDATE_NEWS = 'UPDATE_NEWS'
+export enum NewsAction {
+  FetchNews = 'FETCH_NEWS',
+  FetchNewsSuccess = 'FETCH_NEWS_SUCCESS',
+  UpdateNews = 'UPDATE_NEWS',
+}
 
 export interface IFeedItem {
   source: {
@@ -15,12 +18,16 @@ export interface IFeedItem {
   content: string
 }
 
+export interface IFeedEntities {
+  [key: number]: IFeedItem[]
+}
+
 export interface IFeedState {
   loading: boolean
   total: number
-  entites: {
-    [key: number]: IFeedItem[]
-  } | null
+  error: null | string
+  entities: IFeedEntities | null
+  page: number
 }
 
 export interface IFetchNewsParams {
@@ -28,17 +35,24 @@ export interface IFetchNewsParams {
 }
 
 export interface IFetchNewsAction {
-  type: typeof FETCH_NEWS
-  payload: IFetchNewsParams
+  type: NewsAction.FetchNews
 }
 
-export interface IUpdateNewsAction {
-  type: typeof UPDATE_NEWS
-  payload: {
-    loading: false
-    page: number
-    data: IFeedItem[]
-  }
+export interface IFetchNewsActionPayload {
+  page: number
+  total: number
+  data: IFeedItem[]
 }
 
-export type IFeedActionTypes = IFetchNewsAction | IUpdateNewsAction
+export interface IFetchNewsResponse {
+  articles: IFeedItem[]
+  status: string
+  totalResults: number
+}
+
+export interface IFetchNewsSuccess {
+  type: NewsAction.FetchNewsSuccess
+  payload: IFetchNewsActionPayload
+}
+
+export type IFeedActionTypes = IFetchNewsAction | IFetchNewsSuccess
