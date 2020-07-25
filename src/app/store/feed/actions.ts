@@ -27,7 +27,7 @@ export function fetchNews(params: IFetchNewsParams): AppThunk<void> {
     dispatch(fetchingNews())
     axios
       .get<IFetchNewsResponse>(
-        'https://newsapi.org/v2/everything?domains=washingtonpost.com,nytimes.com&apiKey=9eeef8086b0b415d81ab3ce24d0fd2e8',
+        `https://newsapi.org/v2/everything?domains=washingtonpost.com,nytimes.com&page=${params.page}&pageSize=${params.pageSize}&apiKey=${process.env.REACT_APP_API_KEY}`,
       )
       .then(res => {
         const { articles, totalResults } = res.data

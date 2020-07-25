@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 
 import { fetchNews } from 'src/app/store/feed/actions'
@@ -9,9 +9,12 @@ import { Header } from 'src/app/components/Header/Header.component'
 import { NewsCard } from 'src/app/components/NewsCard/NewsCard.component'
 
 export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNews }) => {
+  const [page, setPage] = useState<number>(1)
+
   useEffect(() => {
     fetchNews({
-      page: 1,
+      page,
+      pageSize: 100,
     })
   }, [])
 
