@@ -10,14 +10,14 @@ export const Header: React.FC<IHeader> = ({ onSearch }) => {
     <div className={styles.headerContainer}>
       <div className="container">
         <nav className="navbar is-transparent">
-          <div className="navbar-brand">
-            <div className="navbar-item">
+          <div className="navbar-brand m-l-0">
+            <div className="navbar-item p-l-0">
               <strong>US News</strong>
             </div>
           </div>
 
           <div className="navbar-end">
-            <div className="navbar-item">
+            <div className="navbar-item p-r-0">
               <div className="control has-icons-left">
                 <input
                   className="input"

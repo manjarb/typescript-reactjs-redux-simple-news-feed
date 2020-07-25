@@ -60,7 +60,7 @@ export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNe
       <Header onSearch={onSearch} />
 
       {entities && (
-        <div id="feed-container" className="container p-t-30 p-b-30">
+        <div id="feed-container" className={`container ${styles.feedContainer}`}>
           <div className="columns is-multiline">
             {((Object.keys(entities) as unknown) as Array<keyof IFeedEntities>).map(key => {
               return entities[key].map(entity => {
@@ -85,6 +85,8 @@ export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNe
                       />
                     </div>
                   )
+                } else {
+                  return false
                 }
               })
             })}

@@ -6,3 +6,20 @@
     max-width: 1152px;
   }
 }
+
+.navbar {
+  align-items: stretch;
+  display: flex;
+  // padding-left: 0.75rem;
+  // padding-right: 0.75rem;
+
+  @media (max-width: 1023px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.navbar-end {
+  justify-content: flex-end;
+  margin-left: auto;
+}
