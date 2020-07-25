@@ -22,10 +22,10 @@ function fetchNewsSucccess(payload: IFetchNewsActionPayload): IFetchNewsSuccess 
   }
 }
 
-export function fetchNews(params: IFetchNewsParams): AppThunk<void> {
+export function fetchNews(params: IFetchNewsParams): AppThunk<Promise<void>> {
   return dispatch => {
     dispatch(fetchingNews())
-    axios
+    return axios
       .get<IFetchNewsResponse>(
         `https://newsapi.org/v2/everything?domains=washingtonpost.com,nytimes.com&page=${params.page}&pageSize=${params.pageSize}&apiKey=${process.env.REACT_APP_API_KEY}`,
       )
@@ -39,8 +39,8 @@ export function fetchNews(params: IFetchNewsParams): AppThunk<void> {
           }),
         )
       })
-      .catch(() => {
-        alert('Fail Get news')
+      .catch(err => {
+        alert(err.message || 'Fail to get News')
       })
   }
 }

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
+import styles from './Feed.module.scss'
 
 import { fetchNews } from 'src/app/store/feed/actions'
 import { IFeedEntities } from 'src/app/store/feed/types'
@@ -9,53 +10,77 @@ import { Header } from 'src/app/components/Header/Header.component'
 import { NewsCard } from 'src/app/components/NewsCard/NewsCard.component'
 
 export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNews }) => {
-  const [page, setPage] = useState<number>(1)
-  const [totalDisplay, setTotalDisplay] = useState<number>(0)
+  let page = 1
 
   useEffect(() => {
-    fetchNews({
-      page,
-      pageSize: 100,
-    })
+    getNews()
+    addScrollListener()
+
+    // eslint-disable-next-line
   }, [])
 
-  const fetchMore = () => {}
+  const trackScrolling = () => {
+    const wrappedElement = document.getElementById('feed-container')
+    if (wrappedElement && isBottom(wrappedElement) && !loading && page < 10) {
+      page += 1
+      removeScrollListener()
+      getNews().then(() => {
+        addScrollListener()
+      })
+    }
+  }
 
-  const { entities, loading, total } = feed
+  const addScrollListener = (): void => {
+    document.addEventListener('scroll', trackScrolling)
+  }
 
+  const removeScrollListener = (): void => {
+    document.removeEventListener('scroll', trackScrolling)
+  }
+
+  const getNews = (): Promise<void> => {
+    return fetchNews({
+      page,
+      pageSize: 10,
+    })
+  }
+
+  const isBottom = (el: HTMLElement): boolean => {
+    return el.getBoundingClientRect().bottom - 1 <= window.innerHeight
+  }
+
+  const { entities, loading } = feed
   return (
-    <div>
+    <div className={styles.container}>
       <Header />
-      {loading && (
-        <div className="p-t-30">
-          <Loading />
+
+      {entities && (
+        <div id="feed-container" className="container p-t-30 p-b-30">
+          <div className="columns is-multiline">
+            {((Object.keys(entities) as unknown) as Array<keyof IFeedEntities>).map(key => {
+              return entities[key].map(entity => {
+                const { source, title, description, urlToImage, publishedAt, url } = entity
+                return (
+                  <div key={entity.title} className="column is-4-desktop is-6-tablet is-12-mobile">
+                    <NewsCard
+                      sourceName={source.name}
+                      published={publishedAt}
+                      image={urlToImage}
+                      title={title}
+                      description={description}
+                      url={url}
+                    />
+                  </div>
+                )
+              })
+            })}
+          </div>
         </div>
       )}
 
-      {!loading && (
-        <div className="container p-t-30 p-b-30">
-          <div className="columns is-multiline">
-            {entities &&
-              ((Object.keys(entities) as unknown) as Array<keyof IFeedEntities>).map(key => {
-                return entities[key].map(entity => {
-                  const { source, title, description, urlToImage, publishedAt } = entity
-                  return (
-                    <div
-                      key={entity.title}
-                      className="column is-4-desktop is-6-tablet is-12-mobile"
-                    >
-                      <NewsCard
-                        sourceName={source.name}
-                        published={publishedAt}
-                        image={urlToImage}
-                        title={title}
-                        description={description}
-                      />
-                    </div>
-                  )
-                })
-              })}
-          </div>
+      {loading && (
+        <div className="p-t-30 p-b-30">
+          <Loading />
         </div>
       )}
     </div>
