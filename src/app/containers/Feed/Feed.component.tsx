@@ -1,25 +1,18 @@
 import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import axios from 'axios'
 
 import { fetchNews } from 'src/app/store/feed/actions'
 import { RootState } from 'src/app/store/root'
+import { Loading } from 'src/app/components/Loading/Loading.component'
 
-export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ fetchNews }) => {
+export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNews }) => {
   useEffect(() => {
-    // fetchNews({
-    //   page: 1,
-    // })
-    axios
-      .get(
-        'https://newsapi.org/v2/everything?domains=washingtonpost.com,nytimes.com&apiKey=9eeef8086b0b415d81ab3ce24d0fd2e8',
-      )
-      .then(res => {
-        console.log(res, ' :rr')
-      })
+    fetchNews({
+      page: 1,
+    })
   }, [])
 
-  return <h1>Feed</h1>
+  return <div>{feed.loading && <Loading />}</div>
 }
 
 const mapStateToProps = (state: RootState /*, ownProps*/) => {

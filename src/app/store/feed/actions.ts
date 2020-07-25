@@ -40,5 +40,8 @@ export function fetchNews(params: IFetchNewsParams): AppThunk<void> {
           }),
         )
       })
+      .catch(() => {
+        alert('Fail Get news')
+      })
   }
 }
