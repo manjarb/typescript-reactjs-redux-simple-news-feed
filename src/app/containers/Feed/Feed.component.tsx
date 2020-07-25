@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import styles from './Feed.module.scss'
 
@@ -11,6 +11,7 @@ import { NewsCard } from 'src/app/components/NewsCard/NewsCard.component'
 
 export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNews }) => {
   let page = 1
+  const [keyword, setKeyword] = useState<string>('')
 
   useEffect(() => {
     getNews()
@@ -49,10 +50,14 @@ export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNe
     return el.getBoundingClientRect().bottom - 1 <= window.innerHeight
   }
 
+  const onSearch = (value: string): void => {
+    setKeyword(value)
+  }
+
   const { entities, loading } = feed
   return (
     <div className={styles.container}>
-      <Header />
+      <Header onSearch={onSearch} />
 
       {entities && (
         <div id="feed-container" className="container p-t-30 p-b-30">
@@ -60,18 +65,27 @@ export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ feed, fetchNe
             {((Object.keys(entities) as unknown) as Array<keyof IFeedEntities>).map(key => {
               return entities[key].map(entity => {
                 const { source, title, description, urlToImage, publishedAt, url } = entity
-                return (
-                  <div key={entity.title} className="column is-4-desktop is-6-tablet is-12-mobile">
-                    <NewsCard
-                      sourceName={source.name}
-                      published={publishedAt}
-                      image={urlToImage}
-                      title={title}
-                      description={description}
-                      url={url}
-                    />
-                  </div>
-                )
+                const lowerKeyword = keyword.toLowerCase()
+                if (
+                  title.toLowerCase().includes(lowerKeyword) ||
+                  description.toLowerCase().includes(lowerKeyword)
+                ) {
+                  return (
+                    <div
+                      key={entity.title}
+                      className="column is-4-desktop is-6-tablet is-12-mobile"
+                    >
+                      <NewsCard
+                        sourceName={source.name}
+                        published={publishedAt}
+                        image={urlToImage}
+                        title={title}
+                        description={description}
+                        url={url}
+                      />
+                    </div>
+                  )
+                }
               })
             })}
           </div>

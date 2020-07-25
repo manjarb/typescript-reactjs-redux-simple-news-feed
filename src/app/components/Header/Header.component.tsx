@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './Header.module.scss'
 
-export const Header: React.FC = () => {
+interface IHeader {
+  onSearch: (value: string) => void
+}
+
+export const Header: React.FC<IHeader> = ({ onSearch }) => {
   return (
     <div className={styles.headerContainer}>
       <div className="container">
@@ -15,7 +19,12 @@ export const Header: React.FC = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="control has-icons-left">
-                <input className="input" type="text" placeholder="Search" />
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Search"
+                  onChange={e => onSearch(e.target.value)}
+                />
                 <span className="icon is-small is-left">
                   <i className="fa fa-search"></i>
                 </span>
