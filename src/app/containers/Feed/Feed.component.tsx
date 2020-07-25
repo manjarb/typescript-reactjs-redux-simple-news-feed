@@ -1,14 +1,22 @@
 import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
+import axios from 'axios'
 
 import { fetchNews } from 'src/app/store/feed/actions'
 import { RootState } from 'src/app/store/root'
 
 export const Feed: React.FC<ConnectedProps<typeof connector>> = ({ fetchNews }) => {
   useEffect(() => {
-    fetchNews({
-      page: 1,
-    })
+    // fetchNews({
+    //   page: 1,
+    // })
+    axios
+      .get(
+        'https://newsapi.org/v2/everything?domains=washingtonpost.com,nytimes.com&apiKey=9eeef8086b0b415d81ab3ce24d0fd2e8',
+      )
+      .then(res => {
+        console.log(res, ' :rr')
+      })
   }, [])
 
   return <h1>Feed</h1>
